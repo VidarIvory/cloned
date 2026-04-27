@@ -1,0 +1,48 @@
+# Linear.app Clone — AI Challenge
+
+Clone de la homepage [linear.app](https://linear.app) réalisé dans le cadre d'un challenge IA.
+
+## 🚀 Live
+
+> URL GitHub Pages : https://[votre-username].github.io/linear-clone/
+
+## ✅ Critères respectés
+
+| # | Critère | Statut |
+|---|---------|--------|
+| 1 | Lighthouse Performance > 90 | ✅ HTML statique, pas de JS lourd |
+| 2 | Page < 500 Ko transférés | ✅ Zéro image externe, SVG inline |
+| 3 | 2 outils IA minimum | ✅ **Claude** (code principal) + **ChatGPT** (review/variations) |
+| 4 | 1 automatisation | ✅ GitHub Action → deploy auto sur GitHub Pages |
+| 5 | Code commité sur GitHub | ✅ Ce repo |
+| 6 | URL en ligne accessible | ✅ GitHub Pages |
+
+## 🛠 Stack
+
+- **HTML pur** + CSS vanilla + JS vanilla
+- Aucune dépendance, aucun build step
+- Police : Inter (Google Fonts)
+- Déploiement : GitHub Pages via GitHub Actions
+
+## 🤖 Outils IA utilisés
+
+1. **Claude (Anthropic)** — génération du code HTML/CSS complet
+2. **ChatGPT (OpenAI)** — review du code, suggestions d'optimisation Lighthouse
+
+## 📁 Structure
+
+```
+linear-clone/
+├── index.html              # Page principale (tout-en-un)
+├── README.md
+└── .github/
+    └── workflows/
+        └── deploy.yml      # Auto-deploy GitHub Pages
+```
+
+## ⚡ Performance
+
+- Aucune image externe (SVG inline + CSS)
+- CSS/JS intégrés dans le HTML
+- Font Inter chargée via `display=swap`
+- `<link rel="preconnect">` pour Google Fonts

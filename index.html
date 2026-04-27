@@ -1,0 +1,1334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Linear – The system for product development</title>
+    <meta name="description" content="Purpose-built for planning and building products. Designed for the AI era." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg: #0a0a0f;
+            --bg2: #111118;
+            --bg3: #16161f;
+            --border: rgba(255,255,255,0.08);
+            --border2: rgba(255,255,255,0.12);
+            --text: #e2e2e8;
+            --text2: #9494a8;
+            --text3: #5a5a6e;
+            --accent: #5e6ad2;
+            --accent2: #7c87e8;
+            --white: #ffffff;
+            --radius: 8px;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            font-size: 14px;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        a { color: inherit; text-decoration: none; }
+
+        /* ─── NAV ─── */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 24px; height: 56px;
+            background: rgba(10,10,15,0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+        .nav-logo {
+            display: flex; align-items: center; gap: 8px;
+            font-weight: 600; font-size: 15px; color: var(--white);
+        }
+        .nav-logo svg { width: 22px; height: 22px; }
+        .nav-links {
+            display: flex; align-items: center; gap: 4px;
+            list-style: none;
+        }
+        .nav-links li a {
+            padding: 6px 10px; border-radius: 6px;
+            font-size: 13.5px; color: var(--text2);
+            transition: color .15s, background .15s;
+        }
+        .nav-links li a:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+        .nav-right { display: flex; align-items: center; gap: 8px; }
+        .btn-ghost {
+            padding: 6px 12px; border-radius: 6px;
+            font-size: 13.5px; color: var(--text2);
+            transition: color .15s, background .15s;
+        }
+        .btn-ghost:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+        .btn-primary {
+            padding: 7px 14px; border-radius: 6px;
+            font-size: 13.5px; font-weight: 500;
+            background: var(--white); color: #0a0a0f;
+            transition: opacity .15s;
+        }
+        .btn-primary:hover { opacity: .88; }
+
+        /* ─── HERO ─── */
+        .hero {
+            padding: 140px 24px 80px;
+            text-align: center;
+            max-width: 900px; margin: 0 auto;
+            position: relative;
+        }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 5px 12px; border-radius: 20px;
+            border: 1px solid var(--border2);
+            background: rgba(94,106,210,0.1);
+            font-size: 12.5px; color: var(--accent2);
+            margin-bottom: 32px;
+            cursor: pointer;
+            transition: border-color .2s, background .2s;
+        }
+        .hero-badge:hover { border-color: var(--accent2); background: rgba(94,106,210,0.15); }
+        .hero-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent2); }
+        .hero h1 {
+            font-size: clamp(36px, 6vw, 64px);
+            font-weight: 600; letter-spacing: -0.03em;
+            line-height: 1.1;
+            color: var(--white);
+            margin-bottom: 20px;
+        }
+        .hero h1 span { color: var(--text3); }
+        .hero p {
+            font-size: 17px; color: var(--text2);
+            max-width: 440px; margin: 0 auto 36px;
+            line-height: 1.65;
+        }
+        .hero-actions {
+            display: flex; align-items: center; justify-content: center; gap: 12px;
+            margin-bottom: 60px;
+        }
+        .btn-cta {
+            padding: 10px 20px; border-radius: 7px;
+            font-size: 14px; font-weight: 500;
+            background: var(--white); color: #0a0a0f;
+            transition: opacity .15s;
+        }
+        .btn-cta:hover { opacity: .88; }
+        .btn-outline {
+            padding: 10px 20px; border-radius: 7px;
+            font-size: 14px; font-weight: 500;
+            border: 1px solid var(--border2); color: var(--text);
+            background: transparent;
+            transition: border-color .2s, background .2s;
+        }
+        .btn-outline:hover { border-color: rgba(255,255,255,0.25); background: rgba(255,255,255,0.04); }
+
+        /* ─── APP SCREENSHOT ─── */
+        .hero-screenshot {
+            position: relative; max-width: 1100px; margin: 0 auto;
+            border-radius: 12px; overflow: hidden;
+            border: 1px solid var(--border);
+            box-shadow: 0 40px 120px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.05);
+        }
+        .hero-screenshot::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: linear-gradient(180deg, transparent 60%, var(--bg) 100%);
+            z-index: 2; pointer-events: none;
+        }
+        .app-mockup {
+            width: 100%; background: var(--bg2);
+            display: grid; grid-template-columns: 220px 1fr;
+            min-height: 440px;
+        }
+        .app-sidebar {
+            background: var(--bg3); border-right: 1px solid var(--border);
+            padding: 16px 0;
+            display: flex; flex-direction: column; gap: 2px;
+        }
+        .sidebar-logo {
+            display: flex; align-items: center; gap: 8px;
+            padding: 8px 16px 16px;
+            font-size: 13px; font-weight: 600; color: var(--white);
+        }
+        .sidebar-logo-icon {
+            width: 22px; height: 22px; border-radius: 6px;
+            background: linear-gradient(135deg, #5e6ad2, #8b5cf6);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 11px; color: white; font-weight: 700;
+        }
+        .sidebar-section { padding: 0 8px; margin-bottom: 8px; }
+        .sidebar-section-label {
+            font-size: 11px; color: var(--text3); text-transform: uppercase;
+            letter-spacing: 0.06em; padding: 6px 8px 4px;
+        }
+        .sidebar-item {
+            display: flex; align-items: center; gap: 8px;
+            padding: 6px 8px; border-radius: 6px;
+            font-size: 12.5px; color: var(--text2);
+            cursor: pointer; transition: background .12s, color .12s;
+        }
+        .sidebar-item:hover, .sidebar-item.active {
+            background: rgba(255,255,255,0.06); color: var(--text);
+        }
+        .sidebar-item-dot {
+            width: 6px; height: 6px; border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .dot-purple { background: #8b5cf6; }
+        .dot-blue { background: #3b82f6; }
+        .dot-green { background: #10b981; }
+        .dot-orange { background: #f59e0b; }
+        .dot-red { background: #ef4444; }
+
+        .app-main { padding: 20px 24px; }
+        .app-header {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .app-title { font-size: 15px; font-weight: 600; color: var(--white); }
+        .app-tabs {
+            display: flex; gap: 2px; background: rgba(255,255,255,0.04);
+            border-radius: 7px; padding: 3px;
+        }
+        .app-tab {
+            padding: 5px 12px; border-radius: 5px;
+            font-size: 12px; color: var(--text2); cursor: pointer;
+        }
+        .app-tab.active { background: var(--bg); color: var(--text); }
+
+        .issue-list { display: flex; flex-direction: column; gap: 1px; }
+        .issue-group-label {
+            font-size: 11.5px; color: var(--text3);
+            padding: 12px 0 6px;
+            display: flex; align-items: center; gap: 6px;
+        }
+        .issue-group-count {
+            background: rgba(255,255,255,0.07); border-radius: 4px;
+            padding: 1px 6px; font-size: 11px;
+        }
+        .issue-row {
+            display: flex; align-items: center; gap: 10px;
+            padding: 8px 10px; border-radius: 6px;
+            cursor: pointer; transition: background .12s;
+            border: 1px solid transparent;
+        }
+        .issue-row:hover { background: rgba(255,255,255,0.04); border-color: var(--border); }
+        .issue-status {
+            width: 14px; height: 14px; border-radius: 50%;
+            border: 2px solid; flex-shrink: 0;
+        }
+        .status-todo { border-color: var(--text3); }
+        .status-progress {
+            border-color: var(--accent); background: transparent;
+            border-right-color: transparent;
+            animation: spin 1.5s linear infinite;
+        }
+        .status-done { border-color: #10b981; background: #10b981; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .issue-id { font-size: 11px; color: var(--text3); min-width: 68px; }
+        .issue-title { font-size: 12.5px; color: var(--text); flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .issue-tag {
+            padding: 2px 7px; border-radius: 4px;
+            font-size: 11px; white-space: nowrap;
+        }
+        .tag-bug { background: rgba(239,68,68,0.15); color: #f87171; }
+        .tag-perf { background: rgba(59,130,246,0.15); color: #60a5fa; }
+        .tag-ai { background: rgba(139,92,246,0.15); color: #a78bfa; }
+        .tag-design { background: rgba(245,158,11,0.15); color: #fbbf24; }
+        .issue-avatar { width: 18px; height: 18px; border-radius: 50%; background: linear-gradient(135deg, #5e6ad2, #8b5cf6); }
+
+        /* ─── SECTIONS ─── */
+        section { max-width: 1100px; margin: 0 auto; padding: 100px 24px; }
+        section.full-width { max-width: none; }
+
+        .section-tag {
+            display: inline-flex; align-items: center; gap: 6px;
+            font-size: 12px; color: var(--text3); text-transform: uppercase;
+            letter-spacing: 0.1em; margin-bottom: 16px;
+        }
+        .section-tag-num { color: var(--accent2); font-weight: 600; }
+
+        .section-h2 {
+            font-size: clamp(28px, 4vw, 44px);
+            font-weight: 600; letter-spacing: -0.025em;
+            color: var(--white); line-height: 1.15;
+            max-width: 600px; margin-bottom: 16px;
+        }
+        .section-sub {
+            font-size: 16px; color: var(--text2);
+            max-width: 500px; line-height: 1.65;
+            margin-bottom: 48px;
+        }
+
+        /* ─── FEATURES 3-COL ─── */
+        .features-intro { padding: 0 24px 80px; text-align: center; max-width: 760px; margin: 0 auto; }
+        .features-intro h2 {
+            font-size: clamp(26px, 3.5vw, 38px);
+            font-weight: 600; letter-spacing: -0.025em; color: var(--white);
+            line-height: 1.2; margin-bottom: 0;
+        }
+        .features-intro h2 strong { color: var(--white); }
+        .features-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 1px; background: var(--border);
+            border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
+            max-width: 1100px; margin: 0 auto;
+        }
+        .feature-card {
+            background: var(--bg2); padding: 32px;
+            transition: background .2s;
+        }
+        .feature-card:hover { background: var(--bg3); }
+        .feature-fig {
+            font-size: 11px; color: var(--text3); text-transform: uppercase;
+            letter-spacing: 0.08em; margin-bottom: 16px;
+        }
+        .feature-card h3 { font-size: 15px; font-weight: 600; color: var(--white); margin-bottom: 8px; }
+        .feature-card p { font-size: 13.5px; color: var(--text2); line-height: 1.6; }
+
+        /* ─── DIVIDER ─── */
+        .divider { border: none; border-top: 1px solid var(--border); margin: 0 24px; }
+
+        /* ─── CONTENT SECTION LAYOUT ─── */
+        .content-section {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 80px; align-items: center;
+            max-width: 1100px; margin: 0 auto; padding: 100px 24px;
+        }
+        .content-section.reverse { direction: rtl; }
+        .content-section.reverse > * { direction: ltr; }
+
+        .section-link {
+            display: inline-flex; align-items: center; gap: 6px;
+            font-size: 13px; color: var(--accent2);
+            margin-top: 24px;
+            transition: gap .15s;
+        }
+        .section-link:hover { gap: 9px; }
+
+        /* ─── UI CARDS ─── */
+        .ui-card {
+            background: var(--bg2); border: 1px solid var(--border);
+            border-radius: 12px; overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+        }
+        .ui-card-header {
+            display: flex; align-items: center; gap: 8px;
+            padding: 12px 16px; border-bottom: 1px solid var(--border);
+            background: var(--bg3);
+        }
+        .ui-card-dots { display: flex; gap: 6px; }
+        .ui-dot {
+            width: 10px; height: 10px; border-radius: 50%;
+        }
+        .ui-dot:nth-child(1) { background: #ff5f57; }
+        .ui-dot:nth-child(2) { background: #febc2e; }
+        .ui-dot:nth-child(3) { background: #28c840; }
+        .ui-card-title { font-size: 12px; color: var(--text3); margin-left: 4px; }
+        .ui-card-body { padding: 16px; }
+
+        /* KANBAN */
+        .kanban { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        .kanban-col { background: rgba(255,255,255,0.03); border-radius: 8px; padding: 10px; }
+        .kanban-col-header {
+            display: flex; align-items: center; justify-content: space-between;
+            font-size: 11.5px; color: var(--text2); margin-bottom: 8px; padding: 0 2px;
+        }
+        .kanban-count {
+            background: rgba(255,255,255,0.07); border-radius: 4px;
+            padding: 0 5px; font-size: 11px; color: var(--text3);
+        }
+        .kanban-item {
+            background: var(--bg2); border: 1px solid var(--border);
+            border-radius: 6px; padding: 10px; margin-bottom: 6px;
+            font-size: 12px; color: var(--text); cursor: pointer;
+            transition: border-color .15s;
+        }
+        .kanban-item:hover { border-color: var(--border2); }
+        .kanban-item-footer {
+            display: flex; align-items: center; gap: 6px; margin-top: 8px;
+        }
+        .kanban-id { font-size: 11px; color: var(--text3); }
+
+        /* ROADMAP */
+        .roadmap-header {
+            display: flex; gap: 0; overflow: hidden;
+            border-bottom: 1px solid var(--border); padding-bottom: 8px; margin-bottom: 12px;
+        }
+        .roadmap-month {
+            flex: 1; text-align: center; font-size: 11px; color: var(--text3);
+            text-transform: uppercase; letter-spacing: 0.06em;
+        }
+        .roadmap-row { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+        .roadmap-label { font-size: 12px; color: var(--text2); width: 80px; flex-shrink: 0; }
+        .roadmap-bar-track { flex: 1; height: 24px; background: rgba(255,255,255,0.03); border-radius: 6px; overflow: hidden; position: relative; }
+        .roadmap-bar {
+            height: 100%; border-radius: 6px;
+            display: flex; align-items: center; padding: 0 8px;
+            font-size: 11px; color: var(--white); font-weight: 500;
+            position: absolute;
+        }
+        .bar-blue { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
+        .bar-purple { background: linear-gradient(90deg, #7c3aed, #a78bfa); }
+        .bar-green { background: linear-gradient(90deg, #059669, #34d399); }
+        .bar-orange { background: linear-gradient(90deg, #d97706, #fbbf24); }
+
+        /* CODE DIFF */
+        .code-block {
+            background: var(--bg); border-radius: 8px; overflow: hidden;
+            font-family: 'SF Mono', 'Fira Code', monospace; font-size: 12px;
+            border: 1px solid var(--border);
+        }
+        .code-block-header {
+            background: var(--bg3); padding: 8px 14px;
+            display: flex; align-items: center; gap: 8px;
+            border-bottom: 1px solid var(--border);
+            font-size: 11.5px; color: var(--text3);
+        }
+        .code-line {
+            padding: 2px 14px; display: flex; gap: 12px; align-items: flex-start;
+        }
+        .code-line.add { background: rgba(16,185,129,0.08); }
+        .code-line.remove { background: rgba(239,68,68,0.08); }
+        .code-num { color: var(--text3); min-width: 24px; text-align: right; user-select: none; }
+        .code-sign { min-width: 14px; }
+        .code-line.add .code-sign { color: #34d399; }
+        .code-line.remove .code-sign { color: #f87171; }
+        .code-text { color: var(--text); white-space: pre; }
+        .code-kw { color: #a78bfa; }
+        .code-str { color: #34d399; }
+        .code-fn { color: #60a5fa; }
+        .code-cm { color: var(--text3); }
+
+        /* ANALYTICS */
+        .analytics-card {
+            background: var(--bg2); border: 1px solid var(--border);
+            border-radius: 12px; padding: 20px;
+        }
+        .analytics-title { font-size: 12.5px; color: var(--text2); margin-bottom: 16px; }
+        .chart-bars {
+            display: flex; align-items: flex-end; gap: 4px; height: 80px;
+            margin-bottom: 8px;
+        }
+        .chart-bar-wrap { flex: 1; display: flex; align-items: flex-end; }
+        .chart-bar {
+            width: 100%; border-radius: 3px 3px 0 0;
+            background: linear-gradient(180deg, #5e6ad2 0%, #3b4bbf 100%);
+            transition: height .3s;
+            min-height: 4px;
+        }
+        .chart-bar.highlight { background: linear-gradient(180deg, #a78bfa 0%, #7c3aed 100%); }
+        .chart-labels {
+            display: flex; gap: 4px;
+        }
+        .chart-label { flex: 1; text-align: center; font-size: 10px; color: var(--text3); }
+
+        /* PULSE */
+        .pulse-card {
+            background: var(--bg2); border: 1px solid var(--border);
+            border-radius: 10px; padding: 16px; margin-top: 12px;
+        }
+        .pulse-header {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .pulse-title { font-size: 13px; font-weight: 600; color: var(--white); }
+        .pulse-date { font-size: 11.5px; color: var(--text3); }
+        .pulse-item {
+            display: flex; align-items: flex-start; gap: 8px;
+            padding: 8px 0; border-bottom: 1px solid var(--border);
+            font-size: 12.5px; color: var(--text2);
+        }
+        .pulse-item:last-child { border-bottom: none; }
+        .pulse-status-dot {
+            width: 8px; height: 8px; border-radius: 50%; margin-top: 4px; flex-shrink: 0;
+        }
+        .ps-risk { background: #f59e0b; }
+        .ps-ok { background: #10b981; }
+        .pulse-project { color: var(--white); font-size: 12.5px; }
+        .pulse-badge {
+            padding: 2px 7px; border-radius: 4px; font-size: 11px;
+        }
+        .badge-risk { background: rgba(245,158,11,0.15); color: #fbbf24; }
+        .badge-ok { background: rgba(16,185,129,0.15); color: #34d399; }
+
+        /* AGENT CHAT */
+        .agent-chat { padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+        .agent-msg {
+            display: flex; gap: 10px; align-items: flex-start;
+        }
+        .agent-avatar {
+            width: 28px; height: 28px; border-radius: 6px;
+            background: linear-gradient(135deg, #1e40af, #5e6ad2);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 11px; font-weight: 700; color: white; flex-shrink: 0;
+        }
+        .agent-avatar.user { background: linear-gradient(135deg, #374151, #6b7280); }
+        .agent-bubble {
+            background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+            border-radius: 8px; padding: 10px 12px;
+            font-size: 12.5px; color: var(--text); max-width: 85%;
+        }
+        .agent-bubble-name { font-size: 11px; color: var(--text3); margin-bottom: 4px; }
+        .agent-code {
+            background: var(--bg); border-radius: 5px; padding: 8px 10px;
+            font-family: monospace; font-size: 11.5px; color: #60a5fa;
+            margin-top: 6px; border: 1px solid var(--border);
+        }
+
+        /* ─── CHANGELOG ─── */
+        .changelog-section { max-width: 800px; margin: 0 auto; padding: 80px 24px; }
+        .changelog-title {
+            font-size: 20px; font-weight: 600; color: var(--white);
+            margin-bottom: 40px;
+        }
+        .changelog-item {
+            display: grid; grid-template-columns: 140px 1fr;
+            gap: 24px; padding: 24px 0;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            transition: opacity .15s;
+        }
+        .changelog-item:hover { opacity: .8; }
+        .changelog-item:first-child { border-top: 1px solid var(--border); }
+        .changelog-date { font-size: 12.5px; color: var(--text3); padding-top: 2px; }
+        .changelog-item h3 { font-size: 14.5px; font-weight: 500; color: var(--white); margin-bottom: 6px; }
+        .changelog-item p { font-size: 13px; color: var(--text2); line-height: 1.6; }
+        .changelog-more {
+            display: inline-flex; align-items: center; gap: 6px;
+            font-size: 13px; color: var(--text2); margin-top: 24px;
+            transition: color .15s;
+        }
+        .changelog-more:hover { color: var(--text); }
+
+        /* ─── TESTIMONIALS ─── */
+        .testimonials {
+            text-align: center; padding: 80px 24px;
+            background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(94,106,210,0.06) 0%, transparent 70%);
+        }
+        .testimonial-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 20px; max-width: 1000px; margin: 0 auto 48px;
+        }
+        .testimonial-card {
+            background: var(--bg2); border: 1px solid var(--border);
+            border-radius: 12px; padding: 24px; text-align: left;
+        }
+        .testimonial-quote {
+            font-size: 14px; color: var(--text); line-height: 1.7;
+            margin-bottom: 16px;
+        }
+        .testimonial-quote::before { content: '"'; color: var(--accent2); }
+        .testimonial-quote::after { content: '"'; color: var(--accent2); }
+        .testimonial-author { display: flex; align-items: center; gap: 10px; }
+        .testimonial-avatar {
+            width: 32px; height: 32px; border-radius: 50%;
+            background: linear-gradient(135deg, #5e6ad2, #8b5cf6);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 12px; font-weight: 600; color: white;
+        }
+        .testimonial-name { font-size: 13px; font-weight: 500; color: var(--white); }
+        .testimonial-company { font-size: 12px; color: var(--text3); }
+        .testimonials-stat {
+            font-size: 15px; color: var(--text2); margin-bottom: 24px;
+        }
+        .testimonials-stat strong { color: var(--white); }
+
+        /* ─── COMPANY LOGOS ─── */
+        .logo-row {
+            display: flex; align-items: center; justify-content: center;
+            gap: 40px; flex-wrap: wrap; margin-bottom: 48px;
+        }
+        .company-logo {
+            font-size: 14px; font-weight: 600; color: var(--text3);
+            letter-spacing: -0.02em; transition: color .2s;
+        }
+        .company-logo:hover { color: var(--text2); }
+
+        /* ─── CTA FINAL ─── */
+        .cta-section {
+            text-align: center; padding: 100px 24px;
+            border-top: 1px solid var(--border);
+            background: radial-gradient(ellipse 60% 80% at 50% 100%, rgba(94,106,210,0.08) 0%, transparent 70%);
+        }
+        .cta-section h2 {
+            font-size: clamp(28px, 4vw, 46px);
+            font-weight: 600; letter-spacing: -0.025em; color: var(--white);
+            margin-bottom: 48px; line-height: 1.15;
+        }
+        .cta-actions {
+            display: flex; align-items: center; justify-content: center;
+            gap: 12px; flex-wrap: wrap;
+        }
+        .btn-cta-lg {
+            padding: 11px 22px; border-radius: 8px;
+            font-size: 14.5px; font-weight: 500;
+            background: var(--white); color: #0a0a0f;
+            transition: opacity .15s;
+        }
+        .btn-cta-lg:hover { opacity: .88; }
+        .btn-outline-lg {
+            padding: 11px 22px; border-radius: 8px;
+            font-size: 14.5px; font-weight: 500;
+            border: 1px solid var(--border2); color: var(--text);
+            transition: border-color .2s, background .2s;
+        }
+        .btn-outline-lg:hover { border-color: rgba(255,255,255,0.25); background: rgba(255,255,255,0.04); }
+
+        /* ─── FOOTER ─── */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 60px 40px 40px;
+        }
+        .footer-top {
+            display: grid; grid-template-columns: 1.5fr repeat(5, 1fr);
+            gap: 40px; margin-bottom: 40px;
+        }
+        .footer-brand {}
+        .footer-brand .nav-logo { margin-bottom: 12px; }
+        .footer-brand p { font-size: 13px; color: var(--text3); line-height: 1.6; max-width: 200px; }
+        .footer-col h4 { font-size: 12.5px; font-weight: 600; color: var(--white); margin-bottom: 14px; }
+        .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+        .footer-col ul li a { font-size: 13px; color: var(--text3); transition: color .15s; }
+        .footer-col ul li a:hover { color: var(--text); }
+        .footer-bottom {
+            display: flex; align-items: center; justify-content: space-between;
+            padding-top: 24px; border-top: 1px solid var(--border);
+            font-size: 12px; color: var(--text3);
+        }
+        .footer-legal { display: flex; gap: 20px; }
+        .footer-legal a { color: var(--text3); transition: color .15s; }
+        .footer-legal a:hover { color: var(--text); }
+
+        /* ─── SUB-FEATURES TABS ─── */
+        .sub-features {
+            display: flex; gap: 8px; flex-wrap: wrap; margin-top: 32px;
+        }
+        .sub-feature-tag {
+            display: flex; align-items: center; gap: 6px;
+            padding: 6px 12px; border-radius: 20px;
+            border: 1px solid var(--border); background: rgba(255,255,255,0.03);
+            font-size: 12px; color: var(--text2); cursor: pointer;
+            transition: border-color .2s, color .2s;
+        }
+        .sub-feature-tag:hover { border-color: var(--border2); color: var(--text); }
+        .sub-feature-tag-num { color: var(--accent2); font-size: 11px; }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .content-section { grid-template-columns: 1fr; gap: 40px; }
+            .content-section.reverse { direction: ltr; }
+            .features-grid { grid-template-columns: 1fr; }
+            .footer-top { grid-template-columns: 1fr 1fr; }
+            .testimonial-grid { grid-template-columns: 1fr; }
+            .app-mockup { grid-template-columns: 1fr; }
+            .app-sidebar { display: none; }
+        }
+
+        /* ─── ANIMATIONS ─── */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .hero-badge { animation: fadeInUp .5s ease both; }
+        .hero h1 { animation: fadeInUp .5s .1s ease both; }
+        .hero p { animation: fadeInUp .5s .2s ease both; }
+        .hero-actions { animation: fadeInUp .5s .3s ease both; }
+        .hero-screenshot { animation: fadeInUp .6s .4s ease both; }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .5; }
+        }
+        .hero-badge-dot { animation: pulse 2s infinite; }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+    <a href="/" class="nav-logo">
+        <svg viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 11C2 6.02944 6.02944 2 11 2C15.9706 2 20 6.02944 20 11C20 15.9706 15.9706 20 11 20" stroke="white" stroke-width="2" stroke-linecap="round"/>
+            <path d="M6 11C6 8.23858 8.23858 6 11 6C13.7614 6 16 8.23858 16 11C16 13.7614 13.7614 16 11 16" stroke="white" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="11" cy="11" r="2" fill="white"/>
+        </svg>
+        Linear
+    </a>
+    <ul class="nav-links">
+        <li><a href="#">Product</a></li>
+        <li><a href="#">Resources</a></li>
+        <li><a href="#">Customers</a></li>
+        <li><a href="#">Pricing</a></li>
+        <li><a href="#">Now</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Docs</a></li>
+    </ul>
+    <div class="nav-right">
+        <a href="#" class="btn-ghost">Log in</a>
+        <a href="#" class="btn-primary">Sign up</a>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" style="max-width:100%; padding-top:140px; padding-bottom:0;">
+    <a href="#" class="hero-badge">
+        <span class="hero-badge-dot"></span>
+        Issue tracking is dead — linear.app/next →
+    </a>
+    <h1>The product<br>development system<br><span>for teams and agents</span></h1>
+    <p>Purpose-built for planning and building products. Designed for the AI era.</p>
+    <div class="hero-actions">
+        <a href="#" class="btn-cta">Get started for free</a>
+        <a href="#" class="btn-outline">Contact sales</a>
+    </div>
+</section>
+
+<!-- APP SCREENSHOT -->
+<div style="max-width:1100px; margin:48px auto; padding:0 24px;">
+    <div class="hero-screenshot">
+        <div class="app-mockup">
+            <div class="app-sidebar">
+                <div class="sidebar-logo">
+                    <div class="sidebar-logo-icon">K</div>
+                    Kinetic
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-item active">
+                        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="5" height="5" rx="1.5" fill="currentColor" opacity=".7"/><rect x="9" y="2" width="5" height="5" rx="1.5" fill="currentColor" opacity=".4"/><rect x="2" y="9" width="5" height="5" rx="1.5" fill="currentColor" opacity=".4"/><rect x="9" y="9" width="5" height="5" rx="1.5" fill="currentColor" opacity=".4"/></svg>
+                        Inbox
+                    </div>
+                    <div class="sidebar-item">
+                        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.5"/><path d="M8 5v4l2 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                        My issues
+                    </div>
+                    <div class="sidebar-item">
+                        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M2 4h12M2 8h8M2 12h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                        Reviews
+                    </div>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-section-label">Workspace</div>
+                    <div class="sidebar-item">
+                        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 2L2 6v8h4v-4h4v4h4V6L8 2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+                        Initiatives
+                    </div>
+                    <div class="sidebar-item">
+                        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="2" y="4" width="12" height="9" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M5 4V3a1 1 0 012 0v1M9 4V3a1 1 0 012 0v1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                        Projects
+                    </div>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-section-label">Favorites</div>
+                    <div class="sidebar-item"><span class="sidebar-item-dot dot-purple"></span>Faster app launch</div>
+                    <div class="sidebar-item"><span class="sidebar-item-dot dot-blue"></span>Agent tasks</div>
+                    <div class="sidebar-item"><span class="sidebar-item-dot dot-orange"></span>UI Refresh</div>
+                    <div class="sidebar-item"><span class="sidebar-item-dot dot-green"></span>Agents Insights</div>
+                </div>
+            </div>
+            <div class="app-main">
+                <div class="app-header">
+                    <div class="app-title">My Issues</div>
+                    <div class="app-tabs">
+                        <div class="app-tab active">All</div>
+                        <div class="app-tab">Active</div>
+                        <div class="app-tab">Backlog</div>
+                    </div>
+                </div>
+                <div class="issue-list">
+                    <div class="issue-group-label">
+                        In Progress <span class="issue-group-count">3</span>
+                    </div>
+                    <div class="issue-row">
+                        <div class="issue-status status-progress"></div>
+                        <span class="issue-id">ENG-1487</span>
+                        <span class="issue-title">Remove contentData from GraphQL API</span>
+                        <span class="issue-tag tag-perf">API</span>
+                        <div class="issue-avatar"></div>
+                    </div>
+                    <div class="issue-row">
+                        <div class="issue-status status-progress"></div>
+                        <span class="issue-id">MKT-1028</span>
+                        <span class="issue-title">Launch page assets</span>
+                        <span class="issue-tag tag-design">Design</span>
+                        <div class="issue-avatar" style="background:linear-gradient(135deg,#059669,#34d399)"></div>
+                    </div>
+                    <div class="issue-row">
+                        <div class="issue-status status-progress"></div>
+                        <span class="issue-id">ENG-2187</span>
+                        <span class="issue-title">Prevent duplicate ride requests on poor connectivity</span>
+                        <span class="issue-tag tag-bug">Bug</span>
+                        <div class="issue-avatar" style="background:linear-gradient(135deg,#b45309,#f59e0b)"></div>
+                    </div>
+                    <div class="issue-group-label">
+                        Todo <span class="issue-group-count">71</span>
+                    </div>
+                    <div class="issue-row">
+                        <div class="issue-status status-todo"></div>
+                        <span class="issue-id">ENG-926</span>
+                        <span class="issue-title">Remove UI inconsistencies across core screens</span>
+                        <span class="issue-tag tag-bug">Bug</span>
+                        <div class="issue-avatar" style="background:linear-gradient(135deg,#7c3aed,#a78bfa)"></div>
+                    </div>
+                    <div class="issue-row">
+                        <div class="issue-status status-todo"></div>
+                        <span class="issue-id">ENG-924</span>
+                        <span class="issue-title">Upgrade to Claude Opus — AI task routing</span>
+                        <span class="issue-tag tag-ai">AI</span>
+                        <div class="issue-avatar" style="background:linear-gradient(135deg,#0891b2,#06b6d4)"></div>
+                    </div>
+                    <div class="issue-row">
+                        <div class="issue-status status-todo"></div>
+                        <span class="issue-id">ENG-1882</span>
+                        <span class="issue-title">Optimize load times for autonomy dashboard</span>
+                        <span class="issue-tag tag-perf">Performance</span>
+                        <div class="issue-avatar"></div>
+                    </div>
+                    <div class="issue-group-label">
+                        Done <span class="issue-group-count">53</span>
+                    </div>
+                    <div class="issue-row" style="opacity:.6">
+                        <div class="issue-status status-done"></div>
+                        <span class="issue-id">ENG-2074</span>
+                        <span class="issue-title">Clean up deprecated APIs and remove legacy endpoints</span>
+                        <div class="issue-avatar" style="background:linear-gradient(135deg,#374151,#6b7280)"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FEATURES INTRO -->
+<div style="padding:80px 24px 40px; text-align:center;">
+    <div class="features-intro">
+        <h2><strong>A new species of product tool.</strong> Purpose-built for modern teams with AI workflows at its core, Linear sets a new standard for planning and building products.</h2>
+    </div>
+</div>
+<div style="max-width:1100px; margin:0 auto; padding:0 24px 80px;">
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-fig">FIG 0.2</div>
+            <h3>Built for purpose</h3>
+            <p>Linear is shaped by the practices and principles of world-class product teams.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-fig">FIG 0.3</div>
+            <h3>Powered by AI agents</h3>
+            <p>Designed for workflows shared by humans and agents. From drafting PRDs to pushing PRs.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-fig">FIG 0.4</div>
+            <h3>Designed for speed</h3>
+            <p>Reduces noise and restores momentum to help teams ship with high velocity and focus.</p>
+        </div>
+    </div>
+</div>
+
+<hr class="divider" />
+
+<!-- SECTION 1 — INTAKE -->
+<div class="content-section">
+    <div>
+        <div class="section-tag"><span class="section-tag-num">1.0</span> Intake</div>
+        <h2 class="section-h2">Make product operations self-driving</h2>
+        <p class="section-sub">Turn conversations and customer feedback into actionable issues that are routed, labeled, and prioritized for the right team.</p>
+        <a href="#" class="section-link">1.0 Intake → <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <div class="sub-features">
+            <div class="sub-feature-tag"><span class="sub-feature-tag-num">1.1</span> Linear Agent +</div>
+            <div class="sub-feature-tag"><span class="sub-feature-tag-num">1.2</span> Triage +</div>
+            <div class="sub-feature-tag"><span class="sub-feature-tag-num">1.3</span> Customer Requests +</div>
+            <div class="sub-feature-tag"><span class="sub-feature-tag-num">1.4</span> Linear Asks +</div>
+        </div>
+    </div>
+    <div>
+        <div class="ui-card">
+            <div class="ui-card-header">
+                <div class="ui-card-dots"><div class="ui-dot"></div><div class="ui-dot"></div><div class="ui-dot"></div></div>
+                <span class="ui-card-title">Issues · Kinetic Engineering</span>
+            </div>
+            <div class="ui-card-body" style="padding:0;">
+                <div class="kanban">
+                    <div class="kanban-col">
+                        <div class="kanban-col-header">Backlog <span class="kanban-count">8</span></div>
+                        <div class="kanban-item">Reduce UI flicker during autonomy transitions<div class="kanban-item-footer"><span class="kanban-id">ENG-2085</span><span class="issue-tag tag-perf" style="font-size:10px;padding:1px 5px;">Perf</span></div></div>
+                        <div class="kanban-item">Add buffering for autonomy event streams<div class="kanban-item-footer"><span class="kanban-id">ENG-2094</span></div></div>
+                        <div class="kanban-item">Reduce startup delay from vehicle sync<div class="kanban-item-footer"><span class="kanban-id">ENG-2092</span><span class="issue-tag tag-perf" style="font-size:10px;padding:1px 5px;">Perf</span></div></div>
+                    </div>
+                    <div class="kanban-col">
+                        <div class="kanban-col-header">In Progress <span class="kanban-count">3</span></div>
+                        <div class="kanban-item" style="border-color:rgba(94,106,210,0.3);">Remove contentData from GraphQL API<div class="kanban-item-footer"><span class="kanban-id">ENG-1487</span><span class="issue-tag tag-perf" style="font-size:10px;padding:1px 5px;">API</span></div></div>
+                        <div class="kanban-item">Launch page assets<div class="kanban-item-footer"><span class="kanban-id">MKT-1028</span><span class="issue-tag tag-design" style="font-size:10px;padding:1px 5px;">Design</span></div></div>
+                    </div>
+                    <div class="kanban-col">
+                        <div class="kanban-col-header">Done <span class="kanban-count">53</span></div>
+                        <div class="kanban-item" style="opacity:.6">Clean up deprecated APIs<div class="kanban-item-footer"><span class="kanban-id">ENG-2074</span></div></div>
+                        <div class="kanban-item" style="opacity:.6">Reduce latency in autonomy state<div class="kanban-item-footer"><span class="kanban-id">ENG-1912</span></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr class="divider" />
+
+<!-- SECTION 2 — PLAN -->
+<div class="content-section reverse">
+    <div>
+        <div class="section-tag"><span class="section-tag-num">2.0</span> Plan</div>
+        <h2 class="section-h2">Define the product direction</h2>
+        <p class="section-sub">Plan and navigate from idea to launch. Align your team with product initiatives, strategic roadmaps, and clear, up-to-date PRDs.</p>
+        <a href="#" class="section-link">2.0 Plan → <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <div class="sub-features">
+            <div class="sub-feature-tag"><span class="sub-feature-tag-num">2.1</span> Projects +</div>
+            <div class="sub-feature-tag"><span class="sub-feature-tag-num">2.2</span> Documents +</div>
+            <div class="sub-feature-tag"><span class="sub-feature-tag-num">2.3</span> Initiatives +</div>
+            <div class="sub-feature-tag"><span class="sub-feature-tag-num">2.4</span> Visual planning +</div>
+        </div>
+    </div>
+    <div>
+        <div class="ui-card">
+            <div class="ui-card-header">
+                <div class="ui-card-dots"><div class="ui-dot"></div><div class="ui-dot"></div><div class="ui-dot"></div></div>
+                <span class="ui-card-title">Roadmap · 2025</span>
+            </div>
+            <div class="ui-card-body">
+                <div class="roadmap-header">
+                    <div class="roadmap-month">FEB</div>
+                    <div class="roadmap-month">MAR</div>
+                    <div class="roadmap-month">APR</div>
+                    <div class="roadmap-month">MAY</div>
+                    <div class="roadmap-month">JUN</div>
+                    <div class="roadmap-month">JUL</div>
+                </div>
+                <div class="roadmap-row">
+                    <div class="roadmap-label" style="font-size:11px;">UI Refresh</div>
+                    <div class="roadmap-bar-track">
+                        <div class="roadmap-bar bar-blue" style="left:0;width:55%;">Core screens</div>
+                    </div>
+                </div>
+                <div class="roadmap-row">
+                    <div class="roadmap-label" style="font-size:11px;">Split fares</div>
+                    <div class="roadmap-bar-track">
+                        <div class="roadmap-bar bar-purple" style="left:30%;width:40%;">Internal Beta</div>
+                    </div>
+                </div>
+                <div class="roadmap-row">
+                    <div class="roadmap-label" style="font-size:11px;">Autonomy</div>
+                    <div class="roadmap-bar-track">
+                        <div class="roadmap-bar bar-green" style="left:15%;width:50%;">Alpha</div>
+                    </div>
+                </div>
+                <div class="roadmap-row">
+                    <div class="roadmap-label" style="font-size:11px;">APAC Launch</div>
+                    <div class="roadmap-bar-track">
+                        <div class="roadmap-bar bar-orange" style="left:55%;width:38%;">Japan Launch</div>
+                    </div>
+                </div>
+                <div style="margin-top:16px; display:flex; flex-direction:column; gap:6px;">
+                    <div style="display:flex;align-items:center;justify-content:space-between;font-size:12px;color:var(--text2);padding:6px 10px;background:rgba(255,255,255,0.03);border-radius:6px;">
+                        <span>Core Product</span><span style="color:var(--text3);">99</span>
+                    </div>
+                    <div style="display:flex;align-items:center;justify-content:space-between;font-size:12px;color:var(--text2);padding:6px 10px;background:rgba(255,255,255,0.03);border-radius:6px;">
+                        <span>Autonomous systems</span><span style="color:var(--text3);">16</span>
+                    </div>
+                    <div style="display:flex;align-items:center;justify-content:space-between;font-size:12px;color:var(--text2);padding:6px 10px;background:rgba(255,255,255,0.03);border-radius:6px;">
+                        <span>Mobile apps</span><span style="color:var(--text3);">8</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr class="divider" />
+
+<!-- SECTION 3 — BUILD -->
+<div class="content-section">
+    <div>
+        <div class="section-tag"><span class="section-tag-num">3.0</span> Build</div>
+        <h2 class="section-h2">Move work forward across teams and agents</h2>
+        <p class="section-sub">Build and deploy AI agents that work alongside your team. Work on complex tasks together or delegate entire issues end-to-end.</p>
+        <a href="#" class="section-link">3.0 Build → <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <div class="sub-features">
+            <div class="sub-feature-tag"><span class="sub-feature-tag-num">3.1</span> Issues +</div>
+            <div class="sub-feature-tag"><span class="sub-feature-tag-num">3.2</span> Agents +</div>
+            <div class="sub-feature-tag"><span class="sub-feature-tag-num">3.3</span> Linear MCP +</div>
+            <div class="sub-feature-tag"><span class="sub-feature-tag-num">3.4</span> Git automations +</div>
+        </div>
+    </div>
+    <div>
+        <div class="ui-card">
+            <div class="ui-card-header">
+                <div class="ui-card-dots"><div class="ui-dot"></div><div class="ui-dot"></div><div class="ui-dot"></div></div>
+                <span class="ui-card-title">Faster app launch · ENG-2703</span>
+            </div>
+            <div class="agent-chat">
+                <div class="agent-msg">
+                    <div class="agent-avatar user">J</div>
+                    <div class="agent-bubble">
+                        <div class="agent-bubble-name">jori · 4 min ago</div>
+                        Right now we show a spinner forever, which makes it look like the car disappeared... <strong>@Codex</strong> can you take a stab at this?
+                    </div>
+                </div>
+                <div class="agent-msg">
+                    <div class="agent-avatar">AI</div>
+                    <div class="agent-bubble">
+                        <div class="agent-bubble-name">Codex · just now</div>
+                        On it! I've received your request. Kicked off a task in kinetic/kinetic-iOS environment.
+                        <div class="agent-code">kinetic-iOS$ rg --files -g 'AGENTS.md'<br>AGENTS.md<br><span style="color:var(--text3);"># Locating initialization logic...</span></div>
+                    </div>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;padding:6px 10px;background:rgba(94,106,210,0.08);border:1px solid rgba(94,106,210,0.2);border-radius:8px;margin-top:4px;">
+                    <div style="width:8px;height:8px;border-radius:50%;background:var(--accent2);animation:pulse 1.5s infinite;"></div>
+                    <span style="font-size:12px;color:var(--accent2);">Codex</span>
+                    <span style="font-size:12px;color:var(--text2);">Examining issue ENG-2703 · In Progress</span>
+                </div>
+                <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
+                    <div style="display:flex;align-items:center;gap:6px;padding:5px 10px;background:rgba(255,255,255,0.04);border-radius:6px;border:1px solid var(--border);">
+                        <div style="width:18px;height:18px;border-radius:4px;background:linear-gradient(135deg,#1e40af,#5e6ad2);display:flex;align-items:center;justify-content:center;font-size:9px;color:white;font-weight:700;">AI</div>
+                        <span style="font-size:11.5px;color:var(--text2);">Codex Agent</span>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:6px;padding:5px 10px;background:rgba(255,255,255,0.04);border-radius:6px;border:1px solid var(--border);">
+                        <div style="width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,#374151,#6b7280);"></div>
+                        <span style="font-size:11.5px;color:var(--text2);">GitHub Copilot</span>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:6px;padding:5px 10px;background:rgba(255,255,255,0.04);border-radius:6px;border:1px solid var(--border);">
+                        <div style="width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,#0f766e,#14b8a6);"></div>
+                        <span style="font-size:11.5px;color:var(--text2);">Cursor</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr class="divider" />
+
+<!-- SECTION 4 — DIFFS -->
+<div class="content-section reverse">
+    <div>
+        <div class="section-tag"><span class="section-tag-num">4.0</span> Diffs <span style="font-size:10px;background:rgba(94,106,210,0.2);color:var(--accent2);padding:2px 7px;border-radius:4px;margin-left:4px;">Coming soon</span></div>
+        <h2 class="section-h2">Review PRs and agent output</h2>
+        <p class="section-sub">Understand code changes at a glance with structural diffs for human and agent output. Review, discuss, and merge — all within Linear.</p>
+        <a href="#" class="section-link">4.0 Diffs → <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+    <div>
+        <div class="ui-card">
+            <div class="ui-card-header">
+                <div class="ui-card-dots"><div class="ui-dot"></div><div class="ui-dot"></div><div class="ui-dot"></div></div>
+                <span class="ui-card-title">kinetic-ios/src/screens/Home/HomeScreen.tsx</span>
+            </div>
+            <div class="code-block" style="border:none;border-radius:0;">
+                <div class="code-line remove"><span class="code-num">1</span><span class="code-sign">-</span><span class="code-text"><span class="code-kw">import</span> { useVehicleState } <span class="code-kw">from</span> <span class="code-str">'@hooks/useVehicleState'</span></span></div>
+                <div class="code-line add"><span class="code-num">1</span><span class="code-sign">+</span><span class="code-text"><span class="code-kw">import</span> { useVehicleState, SyncStatus } <span class="code-kw">from</span> <span class="code-str">'@hooks/useVehicleState'</span></span></div>
+                <div class="code-line"><span class="code-num">2</span><span class="code-sign"> </span><span class="code-text"><span class="code-kw">import</span> { Dashboard } <span class="code-kw">from</span> <span class="code-str">'@components/Dashboard'</span></span></div>
+                <div class="code-line"><span class="code-num">3</span><span class="code-sign"> </span><span class="code-text"></span></div>
+                <div class="code-line"><span class="code-num">4</span><span class="code-sign"> </span><span class="code-text"><span class="code-kw">export const</span> <span class="code-fn">HomeScreen</span> = () => {</span></div>
+                <div class="code-line remove"><span class="code-num">5</span><span class="code-sign">-</span><span class="code-text">  <span class="code-kw">const</span> { vehicleState, isFullySynced } = <span class="code-fn">useVehicleState</span>()</span></div>
+                <div class="code-line add"><span class="code-num">5</span><span class="code-sign">+</span><span class="code-text">  <span class="code-kw">const</span> { vehicleState, syncStatus } = <span class="code-fn">useVehicleState</span>()</span></div>
+                <div class="code-line remove"><span class="code-num">6</span><span class="code-sign">-</span><span class="code-text">  <span class="code-kw">if</span> (!isFullySynced) {</span></div>
+                <div class="code-line add"><span class="code-num">6</span><span class="code-sign">+</span><span class="code-text">  <span class="code-kw">if</span> (syncStatus === SyncStatus.PENDING) {</span></div>
+                <div class="code-line"><span class="code-num">7</span><span class="code-sign"> </span><span class="code-text">    <span class="code-kw">return</span> &lt;ActivityIndicator size=<span class="code-str">"large"</span> /&gt;</span></div>
+                <div class="code-line"><span class="code-num">8</span><span class="code-sign"> </span><span class="code-text">  }</span></div>
+                <div class="code-line add"><span class="code-num">9</span><span class="code-sign">+</span><span class="code-text">  <span class="code-cm">// Render before full sync for faster startup</span></span></div>
+                <div class="code-line"><span class="code-num">10</span><span class="code-sign"> </span><span class="code-text">  <span class="code-kw">return</span> &lt;Dashboard state={vehicleState} syncStatus={syncStatus} /&gt;</span></div>
+                <div class="code-line"><span class="code-num">11</span><span class="code-sign"> </span><span class="code-text">}</span></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr class="divider" />
+
+<!-- SECTION 5 — MONITOR -->
+<div class="content-section">
+    <div>
+        <div class="section-tag"><span class="section-tag-num">5.0</span> Monitor</div>
+        <h2 class="section-h2">Understand progress at scale</h2>
+        <p class="section-sub">Take the guesswork out of product development with project updates, analytics, and dashboards that surface what needs your attention.</p>
+        <a href="#" class="section-link">5.0 Monitor → <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <div class="sub-features">
+            <div class="sub-feature-tag"><span class="sub-feature-tag-num">5.1</span> Pulse +</div>
+            <div class="sub-feature-tag"><span class="sub-feature-tag-num">5.2</span> Insights +</div>
+            <div class="sub-feature-tag"><span class="sub-feature-tag-num">5.3</span> Dashboards +</div>
+        </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px;">
+        <div class="analytics-card">
+            <div class="analytics-title">Issue count by created date</div>
+            <div class="chart-bars">
+                <div class="chart-bar-wrap"><div class="chart-bar" style="height:45%;"></div></div>
+                <div class="chart-bar-wrap"><div class="chart-bar" style="height:60%;"></div></div>
+                <div class="chart-bar-wrap"><div class="chart-bar" style="height:35%;"></div></div>
+                <div class="chart-bar-wrap"><div class="chart-bar" style="height:75%;"></div></div>
+                <div class="chart-bar-wrap"><div class="chart-bar" style="height:50%;"></div></div>
+                <div class="chart-bar-wrap"><div class="chart-bar" style="height:88%;"></div></div>
+                <div class="chart-bar-wrap"><div class="chart-bar highlight" style="height:95%;"></div></div>
+                <div class="chart-bar-wrap"><div class="chart-bar" style="height:70%;"></div></div>
+                <div class="chart-bar-wrap"><div class="chart-bar" style="height:55%;"></div></div>
+                <div class="chart-bar-wrap"><div class="chart-bar" style="height:40%;"></div></div>
+                <div class="chart-bar-wrap"><div class="chart-bar" style="height:65%;"></div></div>
+                <div class="chart-bar-wrap"><div class="chart-bar" style="height:80%;"></div></div>
+            </div>
+            <div class="chart-labels">
+                <div class="chart-label">Feb</div>
+                <div class="chart-label">Mar</div>
+                <div class="chart-label">Apr</div>
+                <div class="chart-label">May</div>
+                <div class="chart-label">Jun</div>
+                <div class="chart-label">Jul</div>
+                <div class="chart-label">Aug</div>
+                <div class="chart-label">Sep</div>
+                <div class="chart-label">Oct</div>
+                <div class="chart-label">Nov</div>
+                <div class="chart-label">Dec</div>
+                <div class="chart-label">Jan</div>
+            </div>
+        </div>
+        <div class="pulse-card">
+            <div class="pulse-header">
+                <div class="pulse-title">Weekly Pulse — Apr 26</div>
+                <div class="pulse-date">2 projects</div>
+            </div>
+            <div class="pulse-item">
+                <div class="pulse-status-dot ps-risk"></div>
+                <div>
+                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+                        <span class="pulse-project">UI refresh</span>
+                        <span class="pulse-badge badge-risk">At risk</span>
+                    </div>
+                    <div style="font-size:12px;color:var(--text3);">By romain · iOS implementation mostly complete, Android still WIP</div>
+                </div>
+            </div>
+            <div class="pulse-item">
+                <div class="pulse-status-dot ps-ok"></div>
+                <div>
+                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+                        <span class="pulse-project">Tokyo launch</span>
+                        <span class="pulse-badge badge-ok">On track</span>
+                    </div>
+                    <div style="font-size:12px;color:var(--text3);">By julian · Localization complete, launch ready for early September</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr class="divider" />
+
+<!-- CHANGELOG -->
+<div class="changelog-section">
+    <div class="changelog-title">Changelog</div>
+    <div class="changelog-item">
+        <div class="changelog-date">Apr 23, 2026</div>
+        <div>
+            <h3>Linear Agent MCP support</h3>
+            <p>Linear Agent can now connect to your tools via MCP, giving it access to data and actions beyond your Linear workspace.</p>
+        </div>
+    </div>
+    <div class="changelog-item">
+        <div class="changelog-date">Apr 15, 2026</div>
+        <div>
+            <h3>Linear for Microsoft Teams</h3>
+            <p>Mention @Linear in any Microsoft Teams channel to turn your conversations into actionable work.</p>
+        </div>
+    </div>
+    <div class="changelog-item">
+        <div class="changelog-date">Apr 8, 2026</div>
+        <div>
+            <h3>Multi-level sub-teams</h3>
+            <p>Structure your teams in Linear to match how your organization works with multi-level team hierarchies.</p>
+        </div>
+    </div>
+    <div class="changelog-item">
+        <div class="changelog-date">Apr 1, 2026</div>
+        <div>
+            <h3>Web forms for Linear Asks</h3>
+            <p>Linear Asks allows you to capture internal requests and bring them into Linear so the appropriate team can work on them.</p>
+        </div>
+    </div>
+    <a href="#" class="changelog-more">View all → </a>
+</div>
+
+<hr class="divider" />
+
+<!-- TESTIMONIALS -->
+<div class="testimonials">
+    <div class="testimonial-grid">
+        <div class="testimonial-card">
+            <div class="testimonial-quote">You just have to use it and you will see, you will just feel it.</div>
+            <div class="testimonial-author">
+                <div class="testimonial-avatar">G</div>
+                <div>
+                    <div class="testimonial-name">Gabriel Peal</div>
+                    <div class="testimonial-company">OpenAI</div>
+                </div>
+            </div>
+        </div>
+        <div class="testimonial-card">
+            <div class="testimonial-quote">Our speed is intense and Linear helps us be action biased.</div>
+            <div class="testimonial-author">
+                <div class="testimonial-avatar" style="background:linear-gradient(135deg,#059669,#34d399);">N</div>
+                <div>
+                    <div class="testimonial-name">Nik Koblov</div>
+                    <div class="testimonial-company">Head of Engineering, Ramp</div>
+                </div>
+            </div>
+        </div>
+        <div class="testimonial-card">
+            <div class="testimonial-quote">Linear is excellent, just excellent. It has the right opinions for fast moving teams.</div>
+            <div class="testimonial-author">
+                <div class="testimonial-avatar" style="background:linear-gradient(135deg,#b45309,#f59e0b);">K</div>
+                <div>
+                    <div class="testimonial-name">Kaz Nejatian</div>
+                    <div class="testimonial-company">Opendoor</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p class="testimonials-stat">Linear powers over <strong>25,000</strong> product teams. From ambitious startups to major enterprises.</p>
+    <div class="logo-row">
+        <span class="company-logo">OpenAI</span>
+        <span class="company-logo">Ramp</span>
+        <span class="company-logo">Vercel</span>
+        <span class="company-logo">Retool</span>
+        <span class="company-logo">Loom</span>
+        <span class="company-logo">Raycast</span>
+        <span class="company-logo">Mercury</span>
+        <span class="company-logo">Pitch</span>
+    </div>
+    <a href="#" class="section-link" style="justify-content:center;">Customer stories → </a>
+</div>
+
+<!-- CTA FINAL -->
+<div class="cta-section">
+    <h2>Built for the future.<br>Available today.</h2>
+    <div class="cta-actions">
+        <a href="#" class="btn-cta-lg">Get started</a>
+        <a href="#" class="btn-outline-lg">Contact sales</a>
+        <a href="#" class="btn-outline-lg">Open app</a>
+        <a href="#" class="btn-outline-lg">Download</a>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-top">
+        <div class="footer-brand">
+            <div class="nav-logo">
+                <svg viewBox="0 0 22 22" width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M2 11C2 6.02944 6.02944 2 11 2C15.9706 2 20 6.02944 20 11C20 15.9706 15.9706 20 11 20" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M6 11C6 8.23858 8.23858 6 11 6C13.7614 6 16 8.23858 16 11C16 13.7614 13.7614 16 11 16" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                    <circle cx="11" cy="11" r="2" fill="white"/>
+                </svg>
+                Linear
+            </div>
+            <p>The system for modern product development teams.</p>
+        </div>
+        <div class="footer-col">
+            <h4>Product</h4>
+            <ul>
+                <li><a href="#">Intake</a></li>
+                <li><a href="#">Plan</a></li>
+                <li><a href="#">Build</a></li>
+                <li><a href="#">Diffs</a></li>
+                <li><a href="#">Monitor</a></li>
+                <li><a href="#">Pricing</a></li>
+                <li><a href="#">Security</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Features</h4>
+            <ul>
+                <li><a href="#">Asks</a></li>
+                <li><a href="#">Agents</a></li>
+                <li><a href="#">Customer Requests</a></li>
+                <li><a href="#">Insights</a></li>
+                <li><a href="#">Mobile</a></li>
+                <li><a href="#">Integrations</a></li>
+                <li><a href="#">Changelog</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Company</h4>
+            <ul>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Customers</a></li>
+                <li><a href="#">Careers</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">Method</a></li>
+                <li><a href="#">Brand</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Resources</h4>
+            <ul>
+                <li><a href="#">Switch</a></li>
+                <li><a href="#">Download</a></li>
+                <li><a href="#">Docs</a></li>
+                <li><a href="#">Developers</a></li>
+                <li><a href="#">Status</a></li>
+                <li><a href="#">Enterprise</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Connect</h4>
+            <ul>
+                <li><a href="#">Contact us</a></li>
+                <li><a href="#">Community</a></li>
+                <li><a href="#">X (Twitter)</a></li>
+                <li><a href="#">GitHub</a></li>
+                <li><a href="#">YouTube</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <span>© 2026 Linear Orbit, Inc.</span>
+        <div class="footer-legal">
+            <a href="#">Privacy</a>
+            <a href="#">Terms</a>
+            <a href="#">DPA</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Smooth nav scroll effect
+    const nav = document.querySelector('nav');
+    window.addEventListener('scroll', () => {
+        nav.style.borderBottomColor = window.scrollY > 10
+            ? 'rgba(255,255,255,0.08)'
+            : 'rgba(255,255,255,0.04)';
+    });
+
+    // Animate chart bars on scroll
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.content-section, .analytics-card, .testimonial-card').forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(24px)';
+        el.style.transition = 'opacity .5s ease, transform .5s ease';
+        observer.observe(el);
+    });
+</script>
+</body>
+</html>
